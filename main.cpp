@@ -72,7 +72,7 @@ private:
 public:
     Bank();
     Account openAccount(string firstName, string lastName, float balance);
-    Account checkBalance(int id);
+    void checkBalance(int id);
     Account deposit(int id, float amount);
     Account withdraw(int id, float amount);
     void closeAccount(int id);
@@ -99,8 +99,8 @@ Account Bank::openAccount(string firstName, string lastName, float balance){
 Account acc(firstName,lastName,balance);
 accounts.insert(pair<int,Account>(acc.getid(),acc));
 return acc;}
-Account Bank::checkBalance(int id){
-    return accounts.find(id)->second;
+void Bank::checkBalance(int id){
+     cout<<" Account Details:"<<itr->second<<endl;
 }
 Account Bank::deposit(int id, float amount){
     Account acc=accounts.find(id)->second;
@@ -132,11 +132,12 @@ Bank::~Bank(){
     file.close();
 }
 int main(){
-    Bank b;
+    Bank ba;
     int choice;
+    cout <<" Hello to the banking system"<<endl;
+    cout<<" Select option"<<endl;
     do {
-        cout <<" Hello to the banking system"<<endl;
-        cout<<" Select option"<<endl;
+
         cout<<"1. Create a new account"<<endl;
         cout<<"2. Check your account's balance"<<endl;
         cout<<"3. Deposit money"<<endl;
@@ -148,16 +149,34 @@ int main(){
         cin>>choice;
         switch(choice){
     case 1:
-        cout<<"Enter your first name"<<endl;
-        cout<<"Enter your last name"<<endl;
-        cout<<"Enter your balance"<<endl;
-        b.openAccount(f,l,b)
+        string f,l;
+        int b;
+        cout<<"Enter your first name, last name, balance"<<endl;
+        cin>>f>>l>>b;
+        ba.openAccount(f,l,b)
+        cout<<"Account was created successfully"<<endl;
+        ba.checkBalance();
         break;
     case 2:
+        cout<<"Enter your account's ID:"<<endl;
+        cin<<id;
+        ba.checkBalance(id);
         break;
     case 3:
+        int id;
+        cout<<"Enter your account's ID:"<<endl;
+        cin<<id;
+            cout<<"Enter amount to deposit:"<<endl;
+        cin<<id;
+        ba.deposit(id);
         break;
     case 4:
+        int id;
+        cout<<"Enter your account's ID:"<<endl;
+        cin<<id;
+        cout<<"Enter amount to withdraw:"<<endl;
+        cin<<id;
+        ba.deposit(id);
         break;
     case 5:
         break;
