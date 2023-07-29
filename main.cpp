@@ -90,6 +90,16 @@ Bank::Bank(){
 Account Bank::checkBalance(int id){
     return accounts.find(id)->second;
 }
+Account Bank::deposit(int id, float amount){
+    Account acc=accounts.find(id)->second;
+    acc.deposit(amount);
+    return acc;
+}
+Account Bank::withdraw(int id, float amount){
+    Account acc=accounts.find(id)->second;
+    acc.withdraw(amount);
+    return acc;
+}
 int main(){
     cout<<"test";
     return 0;}
