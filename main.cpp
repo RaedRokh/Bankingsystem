@@ -27,21 +27,24 @@ friend ifstream & operator>>(ifstream &file,Account &acc);
     };
 int Account::nextid=0;
 Account::Account(string f, string l, float b){
-    try{
+
 nextid++;
+id=nextid;
 firstName=f;
 lastName=l;
-if (b< MIN_BALANCE){
-    throw 200;
-}
-else {balance=b;};}
-catch(...){
-cout<<"Insufficient Balance"<<endl;};
-};
+balance=b;}
 void Account::deposit(float amount){
 balance+=amount;}
 void Account::withdraw(float amount){
+    try{
+    if (balance-amount>MIN_BALANCE){
 balance-=amount;}
+else{
+    throw 200;
+    };}
+catch(...){
+    cout<<"Insufficient balance"<<endl;
+}}
 ostream & operator<<(ostream &o,Account &acc){
 o<<acc.firstName<<endl;
 o<<acc.lastName<<endl;
@@ -128,4 +131,9 @@ int main(){
     Account b("a","c",100);
     cout<<a;
     cout<<b;
+    a.deposit(100);
+    b.withdraw(500);
+        cout<<a;
+    cout<<b;
+
     return 0;}
