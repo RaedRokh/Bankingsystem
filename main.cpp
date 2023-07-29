@@ -100,7 +100,7 @@ Account acc(firstName,lastName,balance);
 accounts.insert(pair<int,Account>(acc.getid(),acc));
 return acc;}
 void Bank::checkBalance(int id){
-     cout<<" Account Details:"<<itr->second<<endl;
+     cout<<" Account Details:"<<accounts.find(id)->second<<endl;
 }
 Account Bank::deposit(int id, float amount){
     Account acc=accounts.find(id)->second;
@@ -132,8 +132,10 @@ Bank::~Bank(){
     file.close();
 }
 int main(){
+    Account Acc;
     Bank ba;
-    int choice;
+    int choice,amount,id,b;
+    string f,l;
     cout <<" Hello to the banking system"<<endl;
     cout<<" Select option"<<endl;
     do {
@@ -143,46 +145,54 @@ int main(){
         cout<<"3. Deposit money"<<endl;
         cout<<"4. Withdraw money"<<endl;
         cout<<"5. Close your account"<<endl;
-        cout<<"5. Show all accounts details"<<endl;
-        cout<<"6. Exit system"<<endl;
+        cout<<"6. Show all accounts details"<<endl;
+        cout<<"7. Exit system"<<endl;
         cout<<" Enter your choice:"<<endl;
         cin>>choice;
         switch(choice){
-    case 1:
-        string f,l;
-        int b;
-        cout<<"Enter your first name, last name, balance"<<endl;
-        cin>>f>>l>>b;
-        ba.openAccount(f,l,b)
-        cout<<"Account was created successfully"<<endl;
-        ba.checkBalance();
-        break;
-    case 2:
-        cout<<"Enter your account's ID:"<<endl;
-        cin<<id;
-        ba.checkBalance(id);
-        break;
-    case 3:
-        int id;
-        cout<<"Enter your account's ID:"<<endl;
-        cin<<id;
-            cout<<"Enter amount to deposit:"<<endl;
-        cin<<id;
-        ba.deposit(id);
-        break;
-    case 4:
-        int id;
-        cout<<"Enter your account's ID:"<<endl;
-        cin<<id;
-        cout<<"Enter amount to withdraw:"<<endl;
-        cin<<id;
-        ba.deposit(id);
-        break;
-    case 5:
-        break;
-    case 6:
-        break;
-    default:
-        break;}
-    }while(choice !=6)
+            case 1:
+
+                cout<<"Enter your first name, last name, balance"<<endl;
+                cin>>f>>l>>b;
+                Acc=ba.openAccount(f,l,b);
+                cout<<"Account created successfully"<<endl;
+                cout<<Acc;
+                break;
+            case 2:
+                cout<<"Enter your account's ID:"<<endl;
+                cin>>id;
+                ba.checkBalance(id);
+                break;
+            case 3:
+                cout<<"Enter your account's ID:"<<endl;
+                cin>>id;
+                    cout<<"Enter amount to deposit:"<<endl;
+                cin>>amount;
+                Acc=ba.deposit(id,amount);
+                cout<<"Amount deposited successfully"<<endl;
+                cout<<Acc;
+                break;
+            case 4:
+
+                cout<<"Enter your account's ID:"<<endl;
+                cin>>id;
+                cout<<"Enter amount to withdraw:"<<endl;
+                cin>>amount;
+                Acc=ba.withdraw(id,amount);
+                cout<<"Amount withdrawn successfully"<<endl;
+                cout<<Acc;
+                break;
+            case 5:
+                cout<<"Enter your account's ID:"<<endl;
+                cin>>id;
+                ba.closeAccount(id);
+                cout<<"You're no longer a client"<<endl;
+                break;
+            case 6:
+                cout<<"Accounts database"<<endl;
+                ba.showallAccounts();
+                break;
+            case 7:
+                break;}
+    }while(choice !=7);
     return 0;}
