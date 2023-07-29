@@ -79,7 +79,7 @@ public:
 Bank::Bank(){
     Account acc;
     ifstream file;
-    file.open("logs.txt");
+    file.open("logs.data");
     do {
     file>>acc;
     accounts.insert(pair<int,Account>(acc.getid(),acc));
@@ -105,6 +105,18 @@ void Bank::showallAccounts(){
     for (itr=accounts.begin(); itr != accounts.end(); itr++){
         cout<<"Account ID:"<<itr->first<<endl<<" Account Details:"<<itr->second<<endl;
     }
+}
+void Bank::closeAccount(int id){
+accounts.erase(id);
+}
+Bank::~Bank(){
+    ofstream file;
+    file.open("logs.data",ios::trunc);
+    map<int,Account>::iterator itr;
+    for (itr=accounts.begin(); itr!=accounts.end(); itr++){
+        file<<itr->second;
+    }
+    file.close();
 }
 int main(){
     cout<<"test";
