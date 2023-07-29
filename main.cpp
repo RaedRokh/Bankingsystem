@@ -46,16 +46,16 @@ catch(...){
     cout<<"Insufficient balance"<<endl;
 }}
 ostream & operator<<(ostream &o,Account &acc){
+o<<acc.id<<endl;
 o<<acc.firstName<<endl;
 o<<acc.lastName<<endl;
-o<<acc.id<<endl;
 o<<acc.balance<<endl;
 return o;}
 ifstream & operator>>(ifstream& file,Account& acc){
-
     file>>acc.id;
     file>>acc.firstName;
     file>>acc.lastName;
+    file>>acc.balance;
     return file;
 }
 ofstream & operator<<(ofstream& file,Account& acc){
@@ -83,6 +83,10 @@ Bank::Bank(){
     Account acc;
     ifstream file;
     file.open("logs.data");
+        if (!file){
+        cout<<"File can't be opened"<<endl;
+        return;
+    }
     while(!file.eof()){
     file>>acc;
     accounts.insert(pair<int,Account>(acc.getid(),acc));
@@ -110,9 +114,10 @@ Account Bank::withdraw(int id, float amount){
 }
 void Bank::showallAccounts(){
     map<int,Account>::iterator itr ;
+    if (!accounts.empty()){
     for (itr=accounts.begin(); itr != accounts.end(); itr++){
-        cout<<"Account ID:"<<itr->first<<endl<<" Account Details:"<<itr->second<<endl;
-    }
+        cout<<" Account Details:"<<itr->second<<endl;
+    }} else {cout<<"There's no accounts";}
 }
 void Bank::closeAccount(int id){
 accounts.erase(id);
@@ -127,13 +132,38 @@ Bank::~Bank(){
     file.close();
 }
 int main(){
-    Account a("a","b",700);
-    Account b("a","c",100);
-    cout<<a;
-    cout<<b;
-    a.deposit(100);
-    b.withdraw(500);
-        cout<<a;
-    cout<<b;
-
+    Bank b;
+    int choice;
+    do {
+        cout <<" Hello to the banking system"<<endl;
+        cout<<" Select option"<<endl;
+        cout<<"1. Create a new account"<<endl;
+        cout<<"2. Check your account's balance"<<endl;
+        cout<<"3. Deposit money"<<endl;
+        cout<<"4. Withdraw money"<<endl;
+        cout<<"5. Close your account"<<endl;
+        cout<<"5. Show all accounts details"<<endl;
+        cout<<"6. Exit system"<<endl;
+        cout<<" Enter your choice:"<<endl;
+        cin>>choice;
+        switch(choice){
+    case 1:
+        cout<<"Enter your first name"<<endl;
+        cout<<"Enter your last name"<<endl;
+        cout<<"Enter your balance"<<endl;
+        b.openAccount(f,l,b)
+        break;
+    case 2:
+        break;
+    case 3:
+        break;
+    case 4:
+        break;
+    case 5:
+        break;
+    case 6:
+        break;
+    default:
+        break;}
+    }while(choice !=6)
     return 0;}
