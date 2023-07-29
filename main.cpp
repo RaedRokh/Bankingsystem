@@ -80,13 +80,18 @@ Bank::Bank(){
     Account acc;
     ifstream file;
     file.open("logs.data");
-    do {
+    while(!file.eof()){
     file>>acc;
     accounts.insert(pair<int,Account>(acc.getid(),acc));
-    }while(!file.eof());
+    };
     Account::setlastid(acc.getid());
     file.close();
+
 }
+Account Bank::openAccount(string firstName, string lastName, float balance){
+Account acc(firstName,lastName,balance);
+accounts.insert(pair<int,Account>(acc.getid(),acc));
+return acc;}
 Account Bank::checkBalance(int id){
     return accounts.find(id)->second;
 }
@@ -119,5 +124,8 @@ Bank::~Bank(){
     file.close();
 }
 int main(){
-    cout<<"test";
+    Account a("a","b",700);
+    Account b("a","c",100);
+    cout<<a;
+    cout<<b;
     return 0;}
