@@ -100,6 +100,12 @@ Account Bank::withdraw(int id, float amount){
     acc.withdraw(amount);
     return acc;
 }
+void Bank::showallAccounts(){
+    map<int,Account>::iterator itr ;
+    for (itr=accounts.begin(); itr != accounts.end(); itr++){
+        cout<<"Account ID:"<<itr->first<<endl<<" Account Details:"<<itr->second<<endl;
+    }
+}
 int main(){
     cout<<"test";
     return 0;}
