@@ -18,7 +18,7 @@ string getlastName(){return lastName;}
 int getid(){return id;}
 float getbalance(){return balance;}
 static int getlastid(){return nextid;}
-static setlastid(int id){nextid=id;}
+static void setlastid(int id){nextid=id;}
 void deposit(float amount);
 void withdraw(float amount);
 friend ostream & operator<<(ostream &o,Account &acc);
@@ -48,21 +48,21 @@ o<<acc.lastName<<endl;
 o<<acc.id<<endl;
 o<<acc.balance<<endl;
 return o;}
-ifstream & operator>>(ifstream &file,Account &acc){
-if (!file.is_open()){
+ifstream & operator>>(ifstream& file,Account& acc){
+
     file>>acc.id;
     file>>acc.firstName;
     file>>acc.lastName;
     return file;
-}}
-ofstream & operator<<(ofstream &file,Account &acc){
-if (!file.is_open()){
+}
+ofstream & operator<<(ofstream& file,Account& acc){
+
     file<<acc.id<<endl;
     file<<acc.firstName<<endl;
     file<<acc.lastName<<endl;
     return file;
+
 }
-};
 class Bank{
 private:
     map<int,Account> accounts;
