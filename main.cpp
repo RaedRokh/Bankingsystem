@@ -7,7 +7,7 @@ class Account {
 private:
 string firstName;
 string lastName;
-int id;
+int id=0;
 static int nextid;
 float balance;
 public:
@@ -42,8 +42,8 @@ balance-=amount;}
 else{
     throw 200;
     };}
-catch(...){
-    cout<<"Insufficient balance"<<endl;
+catch(int e){
+    cout<<"Insufficient balance. Error: "<<e<<endl;
 }}
 ostream & operator<<(ostream &o,Account &acc){
 o<<acc.id<<endl;
@@ -63,6 +63,7 @@ ofstream & operator<<(ofstream& file,Account& acc){
     file<<acc.id<<endl;
     file<<acc.firstName<<endl;
     file<<acc.lastName<<endl;
+    file<<acc.balance<<endl;
     return file;
 
 }
@@ -83,11 +84,14 @@ Bank::Bank(){
     Account acc;
     ifstream file;
     file.open("logs.data");
-        if (!file){
+        if (!file.is_open()){
         cout<<"File can't be opened"<<endl;
         return;
     }
     while(!file.eof()){
+    if (!(file >> acc)) {
+        break;
+    }
     file>>acc;
     accounts.insert(pair<int,Account>(acc.getid(),acc));
     };
@@ -114,10 +118,11 @@ Account Bank::withdraw(int id, float amount){
 }
 void Bank::showallAccounts(){
     map<int,Account>::iterator itr ;
+
     if (!accounts.empty()){
-    for (itr=accounts.begin(); itr != accounts.end(); itr++){
+    for (itr=accounts.begin(); itr != accounts.end(); ++itr){
         cout<<" Account Details:"<<itr->second<<endl;
-    }} else {cout<<"There's no accounts";}
+    }} else {cout<<"There are no accounts"<<endl;}
 }
 void Bank::closeAccount(int id){
 accounts.erase(id);
