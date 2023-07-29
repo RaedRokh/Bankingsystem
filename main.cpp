@@ -18,7 +18,7 @@ string getlastName(){return lastName;}
 int getid(){return id;}
 float getbalance(){return balance;}
 static int getlastid(){return nextid;}
-static void setlastid(int id);
+static setlastid(int id){nextid=id;}
 void deposit(float amount);
 void withdraw(float amount);
 friend ostream & operator<<(ostream &o,Account &acc);
@@ -67,7 +67,7 @@ class Bank{
 private:
     map<int,Account> accounts;
 public:
-    Bank(){}
+    Bank();
     Account openAccount(string firstName, string lastName, float balance);
     Account checkBalance(int id);
     Account deposit(int id, float amount);
@@ -76,6 +76,20 @@ public:
     void showallAccounts();
     ~Bank();
     };
+Bank::Bank(){
+    Account acc;
+    ifstream file;
+    file.open("logs.txt");
+    do {
+    file>>acc;
+    accounts.insert(pair<int,Account>(acc.getid(),acc));
+    }while(!file.eof());
+    Account::setlastid(acc.getid());
+    file.close();
+}
+Account Bank::checkBalance(int id){
+    return accounts.find(id)->second;
+}
 int main(){
     cout<<"test";
     return 0;}
